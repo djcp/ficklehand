@@ -10,7 +10,7 @@ module Ficklehand
   end
 
   def self.db
-    @db ||= Sequel.postgres(ENV['HEROKU_POSTGRESQL_BRONZE_URL'])
+    @db ||= Sequel.connect(ENV['DATABASE_URL'])
   end
 
   def self.init_database
