@@ -7,7 +7,7 @@ module Ficklehand
       @consumer_secret = ENV['CONSUMER_SECRET']
       @oauth_token = ENV['OAUTH_TOKEN']
       @oauth_token_secret = ENV['OAUTH_TOKEN_SECRET']
-      @loop_delay = ENV['LOOP_DELAY']
+      @loop_delay = (ENV['LOOP_DELAY'] || 15).to_i
       @users_to_remove = ENV['USERS_TO_REMOVE'] || []
     end
 

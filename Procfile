@@ -1,1 +1,1 @@
-worker: ficklehand.rb
+worker: ruby ficklehand.rb

@@ -5,7 +5,6 @@ require 'rubygems'
 require 'twitter'
 require 'yaml'
 require 'ficklehand'
-require 'pry'
 
 conf = Ficklehand.config
 conf.init_twitter_config

@@ -20,7 +20,7 @@ module Ficklehand
     self.db.create_table? :decisions_made do
       String :user
       String :original_tweet
-      String :original_tweet_id, index: {unique: true}
+      Bignum :original_tweet_id, index: {unique: true}
       String :decision_tweet
       Time :tweet_time
       Time :responded_at
