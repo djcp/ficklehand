@@ -1,5 +1,4 @@
 require 'sequel'
-require 'sqlite3'
 require 'ficklehand/config'
 require 'ficklehand/fetcher'
 require 'ficklehand/tweet_parser'
