@@ -7,4 +7,5 @@ gem 'god', require: false
 
 group :development, :test do
   gem 'rspec'
+  gem 'pry'
 end

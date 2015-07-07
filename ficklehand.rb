@@ -9,22 +9,37 @@ require 'ficklehand'
 
 conf = Ficklehand.config
 conf.init_twitter_config
-MAX_ATTEMPTS = 3
 
+num_requests = 0
 while(true) do
-  puts "\n#{Time.now}"
+  num_requests += 1
 
-  num_attempts = 0
+  if num_requests % 10 == 0
+    puts "#{num_requests} API requests"
+  end
+
+  mentions = []
   begin
-    num_attempts += 1
-    mentions = Ficklehand::Fetcher.get_mentions
-  rescue Twitter::Error::TooManyRequests => error
-    if num_attempts <= MAX_ATTEMPTS
-      sleep error.rate_limit.reset_in
-      mentions = Ficklehand::Fetcher.get_mentions
-    else
-      raise
+    #mentions = Ficklehand::Fetcher.get_mentions
+    max_tweet_id = Ficklehand.db[:decisions_made].max(:original_tweet_id)
+    mentions = Twitter.search("to:ficklehand since_id:#{max_tweet_id}").results
+    if mentions.any?
+      puts 'Got new mentions'
+      puts mentions.inspect
     end
+    puts 'got mentions'
+  rescue Twitter::Error::TooManyRequests => error
+    puts "Oops. Too many requests. Reset in: #{error.rate_limit.reset_in}"
+    puts "Limit is: #{error.rate_limit.limit}"
+    puts "Remaining: #{error.rate_limit.remaining}"
+    puts "Reset at: #{error.rate_limit.reset_at}"
+    puts "On request # #{num_requests}"
+    num_requests = 0
+
+    sleep error.rate_limit.reset_in + 3
+  rescue Exception => error
+    puts "some other error was thrown:"
+    puts error.inspect
   end
 
   mentions.each do |mention|

@@ -2,7 +2,7 @@ module Ficklehand
   class Responder
 
     def self.send_help(status_id, user)
-      Twitter.update("@#{user} Plz separate choices with \"OR\" or the \"|\". Info here: http://ficklehand.com", in_reply_to_status_id: status_id)
+      Twitter.update("@#{user} Plz separate choices with \"OR\" or the \"|\". Info here: http://blog.collispuro.com/blog/2013/02/06/at-ficklehand-a-twitter-bot-to-help-you-make-meaningless-decisions/", in_reply_to_status_id: status_id)
     end
 
     def self.send_decision(status_id, user, decision)
