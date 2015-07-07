@@ -19,9 +19,10 @@ describe Ficklehand::TweetParser do
 
     ['@ficklehand @foobar bleep OR bar', 
       '@ficklehand foodity bleep barp | choice two',
-      'turtlebucket helper or attack shovel @FICKLEHAND'
+      'turtlebucket helper or attack shovel @FICKLEHAND',
+      '@ficklehand work | finish watching terrible movie'
     ].each do|tweet_text|
-      it 'should return choices' do
+      it "should return choices for #{tweet_text}" do
         expect(tweet_decisions(tweet_text).size).to be > 1
       end
     end
@@ -29,6 +30,7 @@ describe Ficklehand::TweetParser do
     it 'parses decisions correctly' do
       expect(tweet_decisions('@foo bar OR baz?')).to eq ['bar', 'baz']
       expect(tweet_decisions('@foo bar|baz')).to eq ['bar', 'baz']
+      expect(tweet_decisions('@foo bar | baz')).to eq ['bar', 'baz']
       expect(tweet_decisions('bar | baz @foo @bsss')).to eq ['bar', 'baz']
       expect(tweet_decisions('#blee bar OR baz #ddd')).to eq ['#blee bar', 'baz #ddd']
       expect(tweet_decisions('foo | bar | blarp')).to eq ['foo', 'bar', 'blarp']

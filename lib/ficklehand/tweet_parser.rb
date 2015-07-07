@@ -1,7 +1,6 @@
 module Ficklehand
   class TweetParser
 
-    DELIMITER_REGEX = /(or|\|)/i
     CHOICE_DELIMITER_REGEX = /(\s+or\s+)|\|/i
     REMOVE_USER_REGEX = /@[^\s]+/
 
@@ -29,8 +28,8 @@ module Ficklehand
     end
 
     def find_decisions
-      decisions = @tweet_text.split(CHOICE_DELIMITER_REGEX).reject do |part| 
-        part.match(DELIMITER_REGEX)
+      decisions = @tweet_text.split(CHOICE_DELIMITER_REGEX).reject do |part|
+        part.match(CHOICE_DELIMITER_REGEX)
       end.collect{|decision| decision.strip.gsub(/\?$/,'')}
 
       if decisions.length == 1 || decisions == []
